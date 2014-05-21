@@ -40,14 +40,14 @@
 						
 					</div>
 					<div class='form-group'>
-						<input class="btn" type="submit" value="Add the Appointment!">
+						<input class="btn" type="submit" value="Add appointment">
 					</div>
 
 			</form>	
 			<div class="col-sm-6">
 				<h3>Today's Appointments</h3>
 				<h6>(scroll down for future appointments)</h6>
-				<table class="table table-striped table-hovered table-hover table-bordered">
+				<table class="table table-striped table-hovered table-hover table-bordered table-responsive">
 					<tr>
 						<th>Task</th>
 						<th>Date</th>
@@ -72,7 +72,7 @@
 						echo '<td>'.$all['date'].'</td>';
 						echo '<td>'.$all['time'].'</td>';
 						echo '<td>'.$all['status'].'</td>';			
-						echo '<td><a href="/appointments/destroy/'.$all['id'].'">remove</a><br><a id="edit_link" href="/appointments/update_course_1/'.$all['id'].'">edit</td></tr>';
+						echo '<td><a href="/appointments/destroy/'.$all['id'].'">remove</a><br><a id="edit_link" href="/appointments/update_appointment_1/'.$all['id'].'">edit</td></tr>';
 						}
 
 
@@ -88,11 +88,12 @@
 			</div>
 				<div class="row">
 					<h3>Your future appointments</h3>
-					<table class="table table-striped table-hovered table-hover table-bordered">
+					<table class="table table-striped table-hovered table-hover table-bordered table-responsive">
 						<tr>
 							<th>Task</th>
 							<th>Date</th>
 							<th>Time</th>
+							<th>Action</th>
 						</tr>
 					<?php 
 					foreach($all_appointments as $all){
@@ -101,6 +102,7 @@
 							echo '<tr><td>'.$all['task'].'</td>';
 							echo '<td>'.$all['date'].'</td>';
 							echo '<td>'.$all['time'].'</td>';
+							echo '<td><a href="/appointments/destroy/'.$all['id'].'">remove</a><br><a id="edit_link" href="/appointments/update_appointment_1/'.$all['id'].'">edit</td></tr>';
 							echo '</tr>';
 						}
 					}

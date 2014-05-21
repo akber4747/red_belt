@@ -19,4 +19,13 @@ class Appointment extends CI_Model
 	$add_appointment_values = array($appointment['task'], $appointment['appointment_date'], $appointment["appointment_time"], $appointment["appointment_status"], date("Y-m-d, h:i:s"), date("Y-m-d, h:i:s"), $appointment['users_id']);
 	return $this->db->query($add_appointment_query, $add_appointment_values);
 	}
+	function edit($id){
+		$edit_query = "UPDATE appointments SET task = ?, \ndate\n = ?, time = ? WHERE id = ?";
+		$edit_values = array($id['task'], $id['date'], $id['time'], $id['id']);
+		return $this->db->query($edit_query, $edit_values);		
+	}
+	function delete_appointment($appointment_id){
+		return $this->db->query("DELETE FROM appointments WHERE id = ?", $appointment_id);
+	}
+
 }

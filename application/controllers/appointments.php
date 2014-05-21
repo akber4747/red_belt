@@ -98,6 +98,41 @@ class Appointments extends CI_Controller {
 		$this->session->set_flashdata('success', 'You successfully added the appointment!');
 		redirect('/appointments/second_view');
 	}	
+
+	public function update_appointment_1($id){
+		$this->session->set_userdata('id', $id);
+		$this->load->model('Appointment');
+		$this->load->view('update_view', $this->session->userdata('id'));
+	}
+
+
+	public function update_appointment_2($id){
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('appointment_task_update', 'task of the appointment', 'required|min_length[3]');
+		if($this->form_validation->run() === FALSE)
+		{
+			$this->session->set_flashdata('errors', validation_errors());
+			redirect('/appointments/update_appointment_1');
+		}				
+		$this->load->model('Appointment');
+		$update_details = array(
+				"task" => $this->input->post('appointment_task_update'),
+				"date" => $this->input->post('appointment_date_update'),
+				"time" => $this->input->post('appointment_time_update'),
+				"id" => $id
+			);
+		// var_dump($update_details);
+		// die();
+		$update_appointment_query = $this->Appointment->edit($update_details);
+		redirect('/appointments/second_view');
+	}
+	
+	public function destroy($id){
+		$this->load->model('Appointment');
+		$this->Appointment->delete_appointment($id);
+		redirect('/appointments/second_view');
+
+	}
 }
 
 
