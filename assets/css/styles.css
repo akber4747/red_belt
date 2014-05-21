@@ -1,0 +1,19 @@
+#row{
+	text-align: center;
+}
+body{
+	background: url(http://i.imgur.com/JIUrY7R.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;	
+  font-family:  'Roboto Slab', serif;
+}
+.jumbotron{
+	background: transparent;
+}
+.btn{
+	color: yellow;
+/*	font-weight: bold;
+*/	background: black;
+}
