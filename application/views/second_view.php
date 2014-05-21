@@ -18,20 +18,26 @@
 				
 			 ?>
 		</div>	
-		<div class="row">
+		<div class="row jumbotron">
 			<form class="form-group col-sm-6" action="/appointments/add_appointment_cont" method="post">
-					<h2>Add Your Appointment!</h2>	
-					<?php if($this->session->flashdata('errors'))
-					{
-					echo $this->session->flashdata('errors');
-					}; ?>
+					<h2>Add Your Appointment!</h2>
+					
+						<?php if($this->session->flashdata('errors'))
+						{
+						echo '<div style="color: red; background: black;border: 2px solid red; border-radius: 8px; margin-bottom: 5px; padding: 5px; text-align: center;">';
+						echo $this->session->flashdata('errors');
+						echo '</div>';
+						}; ?>
 					<input type="hidden" name="action" value="add-appointment">
 					<div class='form-group'>
-						<input type="text" class="form-control" name="appointment_name" placeholder="appointment name">
+						<input type="text" class="form-control" name="appointment_task" placeholder="appointment task">
 					</div>
 					<div class='form-group'>
-						<textarea type="text" class="form-control" name="app_description" placeholder="appointment description">
-						</textarea>
+						<input type="date" class="form-control" name="appointment_date">
+					</div>					
+					<div class='form-group'>
+						<input type="text" class="form-control" name="appointment_time" placeholder="HH:MM">
+						
 					</div>
 					<div class='form-group'>
 						<input class="btn" type="submit" value="Add the Appointment!">
@@ -39,35 +45,67 @@
 
 			</form>	
 			<div class="col-sm-6">
+				<h3>Today's Appointments</h3>
+				<h6>(scroll down for future appointments)</h6>
 				<table class="table table-striped table-hovered table-hover table-bordered">
 					<tr>
 						<th>Task</th>
-						<th>Time</th>
 						<th>Date</th>
+						<th>Time</th>
 						<th>Status</th>
 						<th>Action</th>
 					</tr>
 				
 			
 					<?php 
-					// if ($this->session->flashdata('success'))
-					// {
-					// 	echo $this->session->flashdata('success');
-					// };
-					// foreach($all_courses as $all){
-					// 	echo '<tr><td>'.$all['name'].'</td>';
-					// 	echo '<td id="description_field">'.$all['description'].'</td>';
-					// 	echo '<td>'.$all['created_at'].'</td>';			
-					// 	echo '<td><a href="/appointments/destroy/'.$all['id'].'">remove</a></td>';
-					// 	echo '<td><a id="edit_link" href="/appointments/update_course_1/'.$all['id'].'">edit</td></tr>';
-					// }
+					if ($this->session->flashdata('success'))
+					{
+						echo $this->session->flashdata('success');
+					};
+
 					
-					// if($this->session->userdata('edit')){
-					// 	echo '<textarea type="text" name="course_description_update" class="form-control" placeholder="course description"></textarea>';
-					// }
+						
+					foreach($all_appointments as $all){
+						if($all['date'] === date('Y-m-d')){	
+
+						echo '<tr><td>'.$all['task'].'</td>';
+						echo '<td>'.$all['date'].'</td>';
+						echo '<td>'.$all['time'].'</td>';
+						echo '<td>'.$all['status'].'</td>';			
+						echo '<td><a href="/appointments/destroy/'.$all['id'].'">remove</a><br><a id="edit_link" href="/appointments/update_course_1/'.$all['id'].'">edit</td></tr>';
+						}
+
+
+					}?>
+				</table>
+				<?php
+					if($this->session->userdata('edit')){
+						echo '<textarea type="text" name="course_description_update" class="form-control" placeholder="course description"></textarea>';
+					}
 
 					 ?>
-					</table>		
+				</div>
+			</div>
+				<div class="row">
+					<h3>Your future appointments</h3>
+					<table class="table table-striped table-hovered table-hover table-bordered">
+						<tr>
+							<th>Task</th>
+							<th>Date</th>
+							<th>Time</th>
+						</tr>
+					<?php 
+					foreach($all_appointments as $all){
+						if($all['date'] !== date('Y-m-d')) {
+
+							echo '<tr><td>'.$all['task'].'</td>';
+							echo '<td>'.$all['date'].'</td>';
+							echo '<td>'.$all['time'].'</td>';
+							echo '</tr>';
+						}
+					}
+					?>	
+					</table>
 				</div>
 			</div>
 		</div>

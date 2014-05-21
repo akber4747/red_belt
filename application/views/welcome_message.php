@@ -17,13 +17,17 @@
 			<?php 
 				if($this->session->flashdata('errors'))
 				{
+					echo '<div style="color: red; background: black;border: 2px solid red; border-radius: 8px; margin-bottom: 5px; padding: 5px; text-align: center;">';
 					echo $this->session->flashdata('errors');
+					echo '</div>';
 				};
 				if($this->session->flashdata('success')){
 					echo $this->session->flashdata('success');
 				}
 				if($this->session->flashdata('login_error')){
+					echo '<div style="color: red; background: black;border: 2px solid red; border-radius: 8px; margin-bottom: 5px; padding: 5px; text-align: center;">';					
 					echo $this->session->flashdata('login_error');
+					echo '</div>';
 				}
 			 ?>
 

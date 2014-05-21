@@ -14,5 +14,9 @@ class Appointment extends CI_Model
 	function get_all_appointments(){
 	return $this->db->query("SELECT * FROM appointments ORDER BY created_at DESC")->result_array();
 	}
-
+	function add_appointment_mod($appointment){
+	$add_appointment_query = "INSERT INTO appointments (task, \ndate\n, time, status, created_at, updated_at, user_id) VALUES (?,?,?,?,?,?,?)";
+	$add_appointment_values = array($appointment['task'], $appointment['appointment_date'], $appointment["appointment_time"], $appointment["appointment_status"], date("Y-m-d, h:i:s"), date("Y-m-d, h:i:s"), $appointment['users_id']);
+	return $this->db->query($add_appointment_query, $add_appointment_values);
+	}
 }

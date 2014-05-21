@@ -68,12 +68,35 @@ class Appointments extends CI_Controller {
 		}
 	}
 	public function second_view(){
-	// $this->output->enable_profiler(TRUE);
-	// $this->load->model('Appointment');
-	// $all_courses = $this->Appointment->get_all_courses();
-	// $this->view_all['all_courses'] = $all_courses;
-	$this->load->view('second_view');
-		// , $this->view_all);
+	$this->output->enable_profiler(TRUE);
+	$this->load->model('Appointment');
+	$all_appointments = $this->Appointment->get_all_appointments();
+	$this->view_all['all_appointments'] = $all_appointments;
+	$this->load->view('second_view', $this->view_all);
+	}
+	public function add_appointment_cont(){
+		// $this->output->enable_profiler(TRUE);
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('appointment_task', 'task of the appointment', 'required|min_length[3]');
+		$this->load->model('Appointment');
+
+		if($this->form_validation->run() === FALSE)
+		{
+			$this->session->set_flashdata('errors', validation_errors());
+			redirect('/appointments/second_view');
+		}
+
+		$appointment_details = array(
+			"task"=> $this->input->post('appointment_task'),
+			"appointment_date"=> $this->input->post('appointment_date'),
+			"appointment_time"=> $this->input->post('appointment_time'),
+			"appointment_status"=>'pending',
+			"users_id"=> $this->session->userdata('user_id'),
+			"appointment_id"=> $this->session->userdata('appointment_id')
+			);
+		$appointment_query = $this->Appointment->add_appointment_mod($appointment_details);
+		$this->session->set_flashdata('success', 'You successfully added the appointment!');
+		redirect('/appointments/second_view');
 	}	
 }
 
